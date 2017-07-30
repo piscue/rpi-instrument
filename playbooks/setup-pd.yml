@@ -1,0 +1,17 @@
+# ansible-playbook -i ~/ansible/hosts /playbooks/setup-pd.yml
+# Created by Victor Sanahuja 20170730
+---
+- hosts: defaultdevices
+  gather_facts: yes
+
+  tasks:
+      - name: Update apt packages
+        become: yes
+        apt:
+          update_cache=yes
+
+      - name: Installing pd and vim
+        become: yes
+        package: name=puredata state=latest
+        with_items:
+          - vim

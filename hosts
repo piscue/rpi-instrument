@@ -1,0 +1,5 @@
+[defaultdevices]
+PUT_YOUR_RASPBERRYPI_IP
+[defaultdevices:vars]
+ansible_user=pi
+ansible_ssh_pass=raspberry
