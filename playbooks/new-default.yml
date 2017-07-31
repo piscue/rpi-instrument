@@ -3,11 +3,11 @@
 - hosts: defaultdevices
   gather_facts: yes
   vars:
-    wifi_country: "US"
+    wifi_country: "ES"
     locale: "en_US.UTF-8"
     keyboard: "pc104"
-    keyboard_layout: "us"
-    timezone: America/Los_Angeles
+    keyboard_layout: "es"
+    timezone: Europe/Madrid
     locale_options:
       # Disable Default (GB) Locale
       - regexp: "^#?en_GB.UTF-8 UTF-8"
@@ -55,7 +55,7 @@
       become: yes
       command: dpkg --configure -a
 
-    # Run apt-get update and apt-get upgrade 
+    # Run apt-get update and apt-get upgrade
     - include: ../tasks/update.yml
       tags: update
 
@@ -70,5 +70,3 @@
 
     - include: ../handlers/tzdata.yml
       tags: system
-
-  
