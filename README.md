@@ -6,7 +6,7 @@ The base of this code (the handlers, tasks, and new-default.yml), is obtained fr
 
 ## Inital steps
 
-1 - [Download Rasbian Lite image](https://downloads.raspberrypi.org/raspbian_lite_latest) (tested with the release of: 2017-07-05)
+1 - [Download Rasbian Lite image](https://downloads.raspberrypi.org/raspbian_lite_latest) (tested with the following releases of: 2016-06-21, 2017-07-05)
 
 2 - [Install the Image onto an SD Card](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
 

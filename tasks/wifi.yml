@@ -9,11 +9,12 @@
 #       handlers/reboot.yml
 #   templates:
 #       templates/wpa_supplicant.conf
-#    
+#
 
 # Set up WiFi from a tempate
 - name: update wpa_supplicant file
   become: yes
   template: src=../templates/wpa_supplicant.conf dest=/etc/wpa_supplicant/wpa_supplicant.conf
-  notify: 
+  notify:
     - reboot
+  when: wifi_ssid != "nowifi"

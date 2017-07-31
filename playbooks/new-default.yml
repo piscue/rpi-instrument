@@ -1,4 +1,5 @@
 # ansible-playbook -i ~/ansible/hosts /playbooks/new-default.yml
+# modified by Victor Sanahuja 20170729
 ---
 - hosts: defaultdevices
   gather_facts: yes
@@ -19,16 +20,19 @@
   vars_prompt:
 
   - name: hostname
-    prompt: "please enter a hostname for your new device:"
+    prompt: "please enter a hostname for your new device"
+    default: raspberrypi
     private: no
   - name: wifi_ssid
-    prompt: "please enter the WiFi SSID for your new device:"
+    prompt: "please enter the WiFi SSID for your new device"
+    default: nowifi
     private: no
   - name: wifi_password
-    prompt: "please enter the WiFi password for your new device:"
+    prompt: "please enter the WiFi password for your new device"
+    default: nowifi
     private: yes
   - name: ssh_key
-    prompt: "please enter the SSH Key for your new device:"
+    prompt: "please enter the SSH Key for your new device"
     private: yes
 
   tasks:
@@ -56,8 +60,8 @@
       command: dpkg --configure -a
 
     # Run apt-get update and apt-get upgrade
-    - include: ../tasks/update.yml
-      tags: update
+    #- include: ../tasks/update.yml
+    #  tags: update
 
     # Set the hostname
     - include: ../tasks/hostname.yml

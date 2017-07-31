@@ -5,6 +5,14 @@
   gather_facts: yes
 
   tasks:
+
+    # Required git depend
+    - name: Install git
+      become: yes
+      package:
+        name: git
+        state: latest
+
     # Download repo https://github.com/piscue/Realtime-Kernel-RaspberryPi.git
     - name: Downloading pre-compiled kernel from piscue's repo
       git:
@@ -25,6 +33,8 @@
         src: "{{ item }}"
         dest: /boot
         remote_src: yes
+        force: yes
+        backup: yes
         mode: 0755
       with_items:
         - "{{ boot_to_copy.stdout_lines }}"
@@ -35,6 +45,15 @@
         src: "{{ item }}"
         dest: /boot/overlays
         remote_src: yes
+        force: yes
+        backup: yes
         mode: 0755
       with_items:
         - "{{ overlays_to_copy.stdout_lines }}"
+      notify:
+        - reboot
+
+  handlers:
+
+    - include: ../handlers/reboot.yml
+      tags: system

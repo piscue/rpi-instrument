@@ -2,9 +2,16 @@
 # Depends on:
 #   vars:
 #       hostname: "test-pi-nes"
-#   
+#
 
 # Set the hostname
 - name: Set the hostname
   become: yes
   command: hostnamectl set-hostname "{{ hostname }}"
+
+# adding hostname to /etc/hosts
+- name: hostname to /etc/hosts, for better resolution
+  become: yes
+  lineinfile:
+    path: /etc/hosts
+    line: "127.0.2.1 {{ hostname }}"
