@@ -12,6 +12,7 @@
 
       - name: Installing pd and vim
         become: yes
-        package: name=puredata state=latest
+        package: name={{ item }} state=latest
         with_items:
           - vim
+          - puredata

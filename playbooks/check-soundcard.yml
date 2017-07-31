@@ -1,0 +1,29 @@
+# ansible-playbook -i ~/ansible/hosts /playbooks/setup-pd.yml
+# Created by Victor Sanahuja 20170731
+---
+- hosts: defaultdevices
+  gather_facts: yes
+
+  tasks:
+      # Required package to reproduce audio
+      - name: Installing mpg123 and git
+        become: yes
+        apt: name={{ item }} state=latest
+        with_items:
+          - git
+          - mpg123
+
+      - name: Getting the Script for Text2Speech of Google
+        get_url:
+          url: https://raw.githubusercontent.com/piscue/rpi-instrument/master/externals/t2sGoogle.sh
+          dest: /home/pi/t2sGoogle.sh
+
+      - name: Setting Text2Speech script as executable
+        file:
+          path: /home/pi/t2sGoogle.sh
+          mode: 0755
+      # TODO install or copy script http://archive.is/OgeSS#selection-9.0-9.1107
+      - name: Saying IP Address from the default Soundcard
+        shell: "/home/pi/t2sGoogle.sh Raspberry PI Wifi IP Address is: `ifconfig | grep -a1 wlan0 | tail -1 | cut -f2 -d: | cut -f1 -dB`"
+        args:
+          executable: /bin/bash
