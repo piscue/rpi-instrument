@@ -1,0 +1,40 @@
+# ansible-playbook -i ~/ansible/hosts /playbooks/realtime-kernel.yml
+# Created by Victor Sanahuja 20170731
+---
+- hosts: defaultdevices
+  gather_facts: yes
+
+  tasks:
+    # Download repo https://github.com/piscue/Realtime-Kernel-RaspberryPi.git
+    - name: Downloading pre-compiled kernel from piscue's repo
+      git:
+        repo: https://github.com/piscue/Realtime-Kernel-RaspberryPi.git
+        dest: /home/pi/Realtime-Kernel-RaspberryPi
+
+    - name: get Boot file names to copy
+      command: "find /home/pi/Realtime-Kernel-RaspberryPi/boot/ -maxdepth 1 -type f  "
+      register: boot_to_copy
+
+    - name: get Overlays file names to copy
+      command: "find /home/pi/Realtime-Kernel-RaspberryPi/boot/overlays -maxdepth 1 -type f  "
+      register: overlays_to_copy
+
+    - name: Installing the new kernel on boot
+      become: yes
+      copy:
+        src: "{{ item }}"
+        dest: /boot
+        remote_src: yes
+        mode: 0755
+      with_items:
+        - "{{ boot_to_copy.stdout_lines }}"
+
+    - name: Installing the new Overlays on boot
+      become: yes
+      copy:
+        src: "{{ item }}"
+        dest: /boot/overlays
+        remote_src: yes
+        mode: 0755
+      with_items:
+        - "{{ overlays_to_copy.stdout_lines }}"
