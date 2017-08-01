@@ -72,5 +72,6 @@
     - include: ../handlers/reboot.yml
       tags: system
 
+    # TODO it needs to be reviewed, the time in date still appear in UTC, maybe declaring TZ variable on boot?
     - include: ../handlers/tzdata.yml
       tags: system

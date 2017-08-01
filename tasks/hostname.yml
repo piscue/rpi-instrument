@@ -14,4 +14,4 @@
   become: yes
   lineinfile:
     path: /etc/hosts
-    line: "127.0.2.1 {{ hostname }}"
+    line: "127.0.2.1        {{ hostname }}"
