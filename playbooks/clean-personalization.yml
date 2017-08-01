@@ -1,0 +1,16 @@
+# ansible-playbook -i ~/ansible/hosts /playbooks/audio-setup.yml
+# Created by Victor Sanahuja 20170731
+---
+- hosts: defaultdevices
+  gather_facts: yes
+
+  tasks:
+    # clean wifi setup
+    - name: Cleaning Wifi setup
+      file: /etc/wpa_supplicant/wpa_supplicant.conf
+        state: absent
+        
+    # clean authorized_keys
+    - name: Cleaning authorized_keys
+      file: /home/pi/.ssh/authorized_keys
+        state: absent

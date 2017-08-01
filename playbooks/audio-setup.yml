@@ -1,0 +1,64 @@
+# ansible-playbook -i ~/ansible/hosts /playbooks/audio-setup.yml
+# Created by Victor Sanahuja 20170731
+---
+
+
+- hosts: defaultdevices
+  gather_facts: yes
+  vars:
+    samplerate: 48000
+    buffersize: 16
+    blocksize: 64
+
+  vars_prompt:
+
+  - name: samplerate
+    prompt: "Samplerate?"
+    default: 48000
+    private: no
+  - name: buffersize
+    prompt: "Buffer Size?"
+    default: 16
+    private: no
+  - name: blocksize
+    prompt: "Block Size?"
+    default: 64
+    private: no
+
+
+  tasks:
+      # know available and default audio interfaces
+      - name: Show Soundcards present
+        shell: cat /proc/asound/cards
+        register: soundcards
+
+      - debug: msg="{{ soundcards.stdout_lines }}"
+
+      # Readwrite mode
+
+      # select desired audio interface for puredata
+
+      # in
+
+      # out
+
+      # select samplerate {{ samplerate }} audiobuf 48000
+
+      # select buffersize {{ buffersize }} audiobuf 16
+
+      # select blocksize {{ blocksize }} blocksize 64
+
+      # save data
+      - name: Saving settings to /home/pi/.pdsettings
+        template:
+          src: "../templates/pdsettings"
+          dest: "/home/pi/.pdsettings"
+
+      # print pdsettings
+      - name: Printing /home/pi/.pdsettings
+        shell: cat /home/pi/.pdsettings
+        register: pdsettings
+
+      - debug: msg="{{ pdsettings.stdout_lines }}"
+
+      # Rebooting or Restart PD

@@ -24,8 +24,12 @@ The base of this code (the handlers, tasks, and new-default.yml), is obtained fr
 
 ```brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb```
 
-9- Run the playbooks TODO
+9 - Have your Wifi credentials and SSH key ready to paste and run this playbooks:
+```ansible-playbook -i hosts playbooks/new-default.yml
+   ansible-playbook -i hosts playbooks/realtime-kernel.yml
 
-This is the initial commit to prepare the repo, this development is not yet in alpha.
+```
 
-The first Musical software intended to run is based Puredata
+This is the firsts commits to start the project, this development is not yet in alpha.
+
+The first Musical software intended to run is based Puredata, for headless running of patches.

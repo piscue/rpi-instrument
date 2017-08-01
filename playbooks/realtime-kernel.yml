@@ -15,43 +15,40 @@
 
     # Download repo https://github.com/piscue/Realtime-Kernel-RaspberryPi.git
     - name: Downloading pre-compiled kernel from piscue's repo
+      become: yes
       git:
         repo: https://github.com/piscue/Realtime-Kernel-RaspberryPi.git
         dest: /home/pi/Realtime-Kernel-RaspberryPi
 
-    - name: get Boot file names to copy
-      command: "find /home/pi/Realtime-Kernel-RaspberryPi/boot/ -maxdepth 1 -type f  "
-      register: boot_to_copy
-
-    - name: get Overlays file names to copy
-      command: "find /home/pi/Realtime-Kernel-RaspberryPi/boot/overlays -maxdepth 1 -type f  "
-      register: overlays_to_copy
-
-    - name: Installing the new kernel on boot
+    - name: Install Realtime Kernel using rsync
       become: yes
-      copy:
-        src: "{{ item }}"
-        dest: /boot
-        remote_src: yes
-        force: yes
-        backup: yes
-        mode: 0755
-      with_items:
-        - "{{ boot_to_copy.stdout_lines }}"
+      synchronize:
+        src: "/home/pi/Realtime-Kernel-RaspberryPi/boot"
+        dest: /
+        # avoid ownership problems
+        archive: no
+        recursive: yes
+      # for local transfer on the remote host
+      delegate_to: "{{ inventory_hostname }}"
+      register: rsynclog
 
-    - name: Installing the new Overlays on boot
+    #- debug: msg="{{ rsynclog.stdout_lines }}"
+
+    - name: Install Realtime Modules using rsync
       become: yes
-      copy:
-        src: "{{ item }}"
-        dest: /boot/overlays
-        remote_src: yes
-        force: yes
-        backup: yes
-        mode: 0755
-      with_items:
-        - "{{ overlays_to_copy.stdout_lines }}"
+      synchronize:
+        src: "/home/pi/Realtime-Kernel-RaspberryPi/lib"
+        dest: /
+        # avoid ownership problems
+        archive: no
+        recursive: yes
+      # for local transfer on the remote host
+      delegate_to: "{{ inventory_hostname }}"
+      register: rsyncmoduleslog
       notify:
         - reboot
+
+
 
   handlers:
 
