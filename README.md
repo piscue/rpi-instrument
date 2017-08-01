@@ -10,17 +10,17 @@ The base of this code (the handlers, tasks, and new-default.yml), is obtained fr
 
 2 - [Install the Image onto an SD Card](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
 
-3 - Enable SSH, by "touching" a ssh inside the boot partition of the SD card. As described [here](https://hackernoon.com/raspberry-pi-headless-install-462ccabd75d0)
+3 - Enable SSH: By "touching" a file called "ssh" inside the boot partition of the SD card, As described [here](https://hackernoon.com/raspberry-pi-headless-install-462ccabd75d0)
 
-4 - Plug your rPI to an Ethernet wire connected to your router, and Power the Raspberry on.
+4 - Put the SD card, Plug your rPI to an Ethernet wire connected to your router, and Power the Raspberry on.
 
 5 - Find your PI's IP Address: Look at your router dhcp leases or use nmap. More [details](https://www.raspberrypi.org/documentation/remote-access/ip-address.md)
 
-6 - Update the host file with the IP address. Using Ansible, it allows to setup any number of network connected rPI at the same time
+6 - Update the "host" file with the IP address. Using Ansible, it allows to setup any number of network connected rPI at the same time
 
 7 - Make you sure Ansible is installed on your computer: [Getting Ansible](http://docs.ansible.com/ansible/latest/intro_installation.html)
 
-8 - Install sshpass, or force install it if you're using brew on osx
+8 - Install sshpass, or force install it if you're using [brew](https://brew.sh) on osx:
 
 ```brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb```
 
@@ -39,6 +39,6 @@ The base of this code (the handlers, tasks, and new-default.yml), is obtained fr
   Precompiled version of Realtime Kernel for Raspberry PI
 ```ansible-playbook -i hosts playbooks/realtime-kernel.yml```
 
-This is the firsts commits to start the project, this development is not yet in alpha.
+This is the firsts commits to start the project, ****this development is not yet in alpha****.
 
 The first Musical software intended to run is based Puredata, for headless running of patches.
