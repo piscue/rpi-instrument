@@ -1,0 +1,91 @@
+
+
+    - name: Extracting pre-compiled realtime-kernel on the hosts
+      unarchive:
+        src: "../externals/{{ kernel_version }}.tgz"
+        dest: "{{ homepi }}"
+
+    # Required rsync depend
+    - name: Install rsync
+      become: yes
+      package:
+        name: rsync
+        state: latest
+
+    # # Download repo https://github.com/piscue/Realtime-Kernel-RaspberryPi.git
+    # - name: Downloading pre-compiled kernel from piscue's repo
+    #   become: yes
+    #   git:
+    #     repo: https://github.com/piscue/Realtime-Kernel-RaspberryPi.git
+    #     dest: /home/pi/Realtime-Kernel-RaspberryPi
+    #
+    #
+
+    - name: "Creating {{ homepi }}boot-important"
+      file:
+        path: "{{ homepi }}boot-important"
+        state: directory
+        mode: 0755
+
+    - name: keep important boot
+      become: yes
+      copy:
+          remote_src: true
+          src: "{{ item }}"
+          dest: "{{ homepi }}boot-important/"
+      with_items:
+        - /boot/bootcode.bin
+        - /boot/start.elf
+        - /boot/config.txt
+        - /boot/cmdline.txt
+
+    # backup /boot
+    - name: backup and clean /boot
+      become: yes
+      archive:
+        path: /boot
+        dest: "{{ homepi}}/boot-{{ ansible_date_time.date }}.tgz"
+        remove: yes
+
+    - name: Install Realtime Kernel using rsync
+      become: yes
+      synchronize:
+        src: "{{ homepi }}{{ kernel_version }}/boot"
+        dest: /
+        # avoid ownership problems
+        archive: no
+        recursive: yes
+        rsync_opts:
+          - "--exclude=vmlinuz-4.9.40-v7+"
+      # for local transfer on the remote host
+      delegate_to: "{{ inventory_hostname }}"
+      register: rsynclog
+
+    #- debug: msg="{{ rsynclog.stdout_lines }}"
+
+    # create a way to recover from /backup, failover
+    - name: Install Realtime Modules using rsync
+      become: yes
+      synchronize:
+        src: "{{ homepi }}{{ kernel_version }}/lib"
+        dest: /
+        # avoid ownership problems
+        archive: no
+        recursive: yes
+      # for local transfer on the remote host
+      delegate_to: "{{ inventory_hostname }}"
+      register: rsyncmoduleslog
+
+    - name: Copy important files back to /boot
+      become: yes
+      synchronize:
+        src: "{{ homepi }}/boot-important/"
+        dest: /boot
+        # avoid ownership problems
+        archive: no
+        recursive: yes
+      # for local transfer on the remote host
+      delegate_to: "{{ inventory_hostname }}"
+      register: rsyncimportantlog
+      notify:
+      - reboot

@@ -1,0 +1,53 @@
+# ansible-playbook -i ~/ansible/hosts /playbooks/main.yml
+# Created by Victor Sanahuja 20170731
+---
+
+- hosts: defaultdevices
+  gather_facts: yes
+  strategy: free
+
+  vars:
+    #samplerate: 48000
+    #buffersize: 16
+    #blocksize: 64
+    kernel_version: "kernel-rpi-rt-4.9.40-v7+"
+    homepi: "/home/pi/"
+
+  vars_prompt:
+
+  - name: samplerate
+    prompt: "Samplerate?"
+    default: 48000
+    private: no
+  - name: buffersize
+    prompt: "Buffer Size?"
+    default: 16
+    private: no
+  - name: blocksize
+    prompt: "Block Size?"
+    default: 64
+    private: no
+
+  tasks:
+    - debug:
+        msg: "play audio not so loud!"
+
+
+    # Default skipped due to start
+    # from ethernet and follow via wifi
+    #- include: new-default.yml
+    #  tags: setup
+
+    - include: ../tasks/setup-pd.yml
+      tags: setup
+
+    - include: ../tasks/audio-setup.yml
+      tags: setup
+
+    - include: ../tasks/realtime-kernel.yml
+      tags: setup
+
+  handlers:
+
+    - include: ../handlers/reboot.yml
+      tags: system

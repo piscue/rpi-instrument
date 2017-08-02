@@ -33,11 +33,8 @@ The base of this code (the handlers, tasks, and new-default.yml), is obtained fr
   Setup Hostname, Wifi and SSH Key for keyless SSH connection
 ```ansible-playbook -i hosts playbooks/new-default.yml```
 
-  Puredata Install
-```ansible-playbook -i hosts playbooks/setup-pd.yml```
-
-  Precompiled version of Realtime Kernel for Raspberry PI
-```ansible-playbook -i hosts playbooks/realtime-kernel.yml```
+  Puredata Install, Realtime Kernel, Optimizations..
+```ansible-playbook -i hosts playbooks/main.yml```
 
 This is the firsts commits to start the project, ****this development is not yet in alpha****.
 

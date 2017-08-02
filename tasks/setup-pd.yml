@@ -1,0 +1,14 @@
+# Update apt packages
+- name: Update apt packages
+  become: yes
+  apt:
+    update_cache=yes
+
+# Installing pd and vim. Maybe swith to puredata-core
+- name: Installing pd and vim
+  become: yes
+  package: name={{ item }} state=latest
+  with_items:
+    - vim
+    - puredata-core
+    #- puredata
