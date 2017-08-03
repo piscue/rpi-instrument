@@ -1,0 +1,74 @@
+# ansible-playbook -i ~/ansible/hosts /playbooks/install-patch.yml
+---
+
+- hosts: defaultdevices
+  gather_facts: yes
+  strategy: free
+
+  vars_prompt:
+
+  - name: patchsrc
+    prompt: "Local Directory Path with PD patch (main.pd will be called)?"
+    default: "../externals/pdtest"
+    private: no
+
+  vars:
+    homepi: /home/pi/
+    patchPH: "{{ homepi }}patch"
+
+  tasks:
+
+    # check readwrite /
+    #- name: Switch to readwrite
+    #  raspi_ro_root_enabled: no
+
+    # Required rsync depend
+    - name: Check rsync
+      become: yes
+      package:
+        name: rsync
+        state: latest
+
+    # Required pd depend
+    - name: Check puredata-core
+      become: yes
+      package:
+        name: puredata-core
+        state: latest
+    - name: Disable autorun momentary
+      cron:
+        name: pd
+        state: absent
+
+    # copy files
+    - name: Copying PD project onto rPI
+      synchronize:
+        src: "{{ patchsrc }}/"
+        dest: "{{ patchPH }}"
+
+
+    # setting autorun on startup TODO consider add -rt
+    - name: Check autorun
+      cron:
+        name: pd
+        reboot: yes
+        job: "puredata -nogui {{ patchPH }}/main.pd &"
+        state: present
+
+    # run pd patch now
+    #- block:
+    #  - name: killing any PD running
+    #    command: killall puredata
+    #  rescue:
+    #    register: nopdrunning
+
+    # readonly pending
+    #- name: Switch to readonly
+    #  raspi_ro_root_enabled: yes
+    #  raspi_ro_root_state_change_reboot: yes
+
+    - debug: msg="Rebooting rPI and running the new patch on PD"
+
+    # reboot hangs the playbook
+    - include: ../handlers/reboot.yml
+      tags: system

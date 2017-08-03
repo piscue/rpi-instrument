@@ -1,5 +1,5 @@
 # ansible-playbook -i ~/ansible/hosts /playbooks/clean-packages.yml
-# Created by Victor Sanahuja 20170730
+
 ---
 - hosts: defaultdevices
   gather_facts: yes

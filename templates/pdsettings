@@ -1,12 +1,11 @@
-audioapi: 1
-noaudioin: True
-noaudioout: False
-audiooutdev1: 0 2
-audiooutdevname1: snd_rpi_hifiberry_dac (hardware)
-audiobuf: {{ buffersize }}
-rate: {{ samplerate }}
+;audioapi: 1
+;noaudioin: True
+;noaudioout: False
+;audiooutdevname1: snd_rpi_hifiberry_dac (hardware)
+;audiobuf: {{ buffersize }}
+;rate: {{ samplerate }}
 callback: 0
-blocksize: {{ blocksize }}
+;blocksize: {{ blocksize }}
 nomidiin: False
 midiindev1: 0
 midiindevname1: /dev/midi1

@@ -1,5 +1,5 @@
 # ansible-playbook -i ~/ansible/hosts /playbooks/main.yml
-# Created by Victor Sanahuja 20170731
+
 ---
 
 - hosts: defaultdevices
@@ -17,7 +17,7 @@
 
   - name: samplerate
     prompt: "Samplerate?"
-    default: 48000
+    default: 44100
     private: no
   - name: buffersize
     prompt: "Buffer Size?"
@@ -44,8 +44,9 @@
     - include: ../tasks/audio-setup.yml
       tags: setup
 
-    - include: ../tasks/realtime-kernel.yml
-      tags: setup
+  # disabling rt to test pd properly
+  #- include: ../tasks/realtime-kernel.yml
+  #    tags: setup
 
   handlers:
 

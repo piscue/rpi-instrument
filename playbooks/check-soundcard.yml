@@ -1,5 +1,5 @@
-# ansible-playbook -i ~/ansible/hosts /playbooks/setup-pd.yml
-# Created by Victor Sanahuja 20170731
+# ansible-playbook -i ~/ansible/hosts /playbooks/check-soundcard.yml
+
 ---
 - hosts: defaultdevices
   gather_facts: yes

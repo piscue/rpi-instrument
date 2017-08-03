@@ -31,10 +31,16 @@ The base of this code (the handlers, tasks, and new-default.yml), is obtained fr
 10 - Have your Wifi credentials and SSH key ready to paste and run this playbooks:
 
   Setup Hostname, Wifi and SSH Key for keyless SSH connection
+
 ```ansible-playbook -i hosts playbooks/new-default.yml```
 
-  Puredata Install, Realtime Kernel, Optimizations..
+  Puredata Install, Realtime Kernel (Disabled Temporary), Optimizations...
+
 ```ansible-playbook -i hosts playbooks/main.yml```
+
+  Install a PD project and autorun it on boot, it also accepts one midi controller connected
+
+```ansible-playbook -i hosts playbooks/install-patch.yml```
 
 This is the firsts commits to start the project, ****this development is not yet in alpha****.
 

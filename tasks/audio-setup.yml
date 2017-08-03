@@ -27,6 +27,13 @@
         shell: "cpufreq-set -g performance"
         register: performance
 
+      - name: Check autorun governor performance
+        cron:
+          name: pd
+          reboot: yes
+          job: "cpufreq-set -g performance"
+          state: present
+
 
       # Readwrite mode
 
