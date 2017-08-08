@@ -1,0 +1,22 @@
+  #  - name: Enabling USB audio
+  #      set_fact:
+  #        alsausb: "options snd-usb-audio index=0"
+  #      when: usbaudio = "yes"
+
+  #    set_fact:
+  #      alsausb: "#options snd-usb-audio index=0"
+  #    when: usbaudio != "yes"
+
+    - name: USB AUDIO | Generating alsa-base.conf
+      template:
+        src: "../templates/alsa-base.conf"
+        dest: "/etc/modprobe.d/alsa-base.conf"
+      notify:
+      - reboot
+
+    - name: USB AUDIO | Disable on-board sound
+      become: yes
+      lineinfile:
+        path: /boot/config.txt
+        regexp: '^dtparam=audio=on'
+        line: '#dtparam=audio=on'

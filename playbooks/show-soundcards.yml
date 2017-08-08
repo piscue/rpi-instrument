@@ -1,0 +1,16 @@
+# ansible-playbook -i ~/ansible/hosts /playbooks/set-soundcard.yml
+---
+- hosts: defaultdevices
+  gather_facts: yes
+
+  tasks:
+
+      # know available and default audio interfaces
+      - name: Show Soundcards present
+        shell: cat /proc/asound/cards
+        register: soundcards
+
+      - debug: msg="{{ soundcards.stdout_lines }}"
+
+      - include: ../tasks/disable-services.yml
+        tags: setup

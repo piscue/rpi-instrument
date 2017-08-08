@@ -4,40 +4,135 @@
 
 - hosts: defaultdevices
   gather_facts: yes
-  strategy: free
+  # removing strategy free due reboots
+  #strategy: free
+  become: yes
+
+  # testing if adding the role work
+  #roles:
+  #  - DinoTools.raspi_ro_root
 
   vars:
-    #samplerate: 48000
-    #buffersize: 16
-    #blocksize: 64
+    samplerate: 48000
+    buffersize: 16
+    blocksize: 64
     kernel_version: "kernel-rpi-rt-4.9.40-v7+"
     homepi: "/home/pi/"
 
     # This configures an external i2s dac
     # based on pcm8251a
     externaldac: "no"
+    # enable usb audio card as default
+    usbaudio: "no" # this have preference on any other dac
+    alsausb: "{{ 'options snd-usb-audio index=0' if usbaudio == 'yes' else '#options snd-usb-audio index=0' }}"
+
+    #new-default vars
+    wifi_country: "ES"
+    locale: "en_US.UTF-8"
+    keyboard: "pc104"
+    keyboard_layout: "es"
+    timezone: Europe/Madrid
+    locale_options:
+      # Disable Default (GB) Locale
+      - regexp: "^#?en_GB.UTF-8 UTF-8"
+        line: "# en_GB.UTF-8 UTF-8"
+      # Enable US Locale
+      - regexp: "^#?en_US.UTF-8 UTF-8"
+        line: "en_US.UTF-8 UTF-8"
+
+
+    #my_var: "{{ 'foo' if my_condition else '' }}"
+  #  raspi_ro_root_enabled: yes
+  #  raspi_ro_root_state_change_reboot: yes
+
 
   vars_prompt:
 
-  - name: samplerate
-    prompt: "Samplerate?"
-    default: 48000
+  - name: hostname
+    prompt: "please enter a hostname for your new device"
+    default: rpinstrument
     private: no
-  - name: buffersize
-    prompt: "Buffer Size?"
-    default: 16
+  - name: wifi_ssid
+    prompt: "please enter the WiFi SSID for your new device"
+    default: nowifi
     private: no
-  - name: blocksize
-    prompt: "Block Size?"
-    default: 64
-    private: no
+  - name: wifi_password
+    prompt: "please enter the WiFi password for your new device"
+    default: nowifi
+    private: yes
+  - name: ssh_key
+    prompt: "please enter the SSH Key for your new device"
+    default: samesshkey
+    private: yes
+
+  # - name: samplerate
+  #  prompt: "Samplerate?"
+  #  default: 48000
+  #  private: no
+  # - name: buffersize
+  #  prompt: "Buffer Size?"
+  #  default: 16
+  #  private: no
+  # - name: blocksize
+  #  prompt: "Block Size?"
+  #  default: 64
+  #  private: no
 
   tasks:
 
-    # Default skipped due to start
-    # from ethernet and follow via wifi
-    #- include: new-default.yml
-    #  tags: setup
+    - include: ../tasks/rw.yml
+      tags: setup
+
+    - include: ../tasks/expand-filesystem.yml
+      tags: setup
+
+    # Set Internationalization Options
+    - include: ../tasks/internationalization.yml
+      tags: setup
+
+    # Set WiFi Options
+    - include: ../tasks/wifi.yml
+      tags: setup
+
+#    - name: Create SSH folder
+#      file: path=~/.ssh state=directory
+
+#    - name: Set up SSH Key from a template
+#      template: src=../templates/authorized_keys dest=~/.ssh/authorized_keys
+
+    - name: SETUP || ssh keyless
+      block:
+
+      - name: SETUP || Create SSH folder
+        become: no
+        file:
+          path: "~/.ssh"
+          state: directory
+
+      - name: SETUP || Set up SSH Key from a template
+        become: no
+        template:
+          src: "../templates/authorized_keys"
+          dest: "~/.ssh/authorized_keys"
+
+      when: ssh_key != 'samesshkey'
+
+    - name: run 'dpkg --configure -a'
+      become: yes
+      command: dpkg --configure -a
+
+    # Run apt-get update and apt-get upgrade
+    #- include: ../tasks/update.yml
+    #  tags: update
+
+    # Set the hostname
+    - include: ../tasks/hostname.yml
+      tags: setup
+
+    # Starting setting instrument
+
+    - include: ../tasks/performance.yml
+      tags: setup
 
     - include: ../tasks/disable-services.yml
       tags: setup
@@ -48,13 +143,15 @@
     - include: ../tasks/audio-setup.yml
       tags: setup
 
-    # implement this handler: - name: wait for reboot to finish
-
-  # disabling rt to test pd properly
-  #- include: ../tasks/realtime-kernel.yml
-  #    tags: setup
+    # disabling rt to test pd properly
+    #- include: ../tasks/realtime-kernel.yml
+    #    tags: setup
 
   handlers:
 
     - include: ../handlers/reboot.yml
+      tags: system
+
+    # TODO it needs to be reviewed, the time in date still appear in UTC, maybe declaring TZ variable on boot?
+    - include: ../handlers/tzdata.yml
       tags: system

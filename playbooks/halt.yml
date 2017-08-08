@@ -1,0 +1,13 @@
+---
+
+  - hosts: defaultdevices
+    gather_facts: no
+
+    tasks:
+
+    - name: HALT | Stopping all hosts!
+      command: shutdown -h +0 'Ansible Shutdown triggered'
+      async: 0
+      poll: 0
+      ignore_errors: true
+      become: true

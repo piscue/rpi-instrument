@@ -1,67 +1,7 @@
+- include: external-dac.yml
+  tags: setup
+  when: usbaudio != 'yes'
 
-
-      - name: Set vm.swappiness to 10 in sysctl.conf
-        become: yes
-        sysctl:
-          name: vm.swappiness
-          value: 10
-          state: present
-
-      - name: Set fs.inotify.max_user_watches to 524288 in systctl.conf
-        become: yes
-        sysctl:
-          name: fs.inotify.max_user_watches
-          value: 524288
-          state: present
-
-      # Install linux-cpupower
-      - name: Installing cpufreq-set by cpufrequtils package
-        become: yes
-        package:
-          name: cpufrequtils
-          state: latest
-
-      # sudo cpufreq-set -c <cpunr> -g performance'
-      - name: Setting performance governor on all CPUs
-        become: yes
-        shell: "cpufreq-set -g performance"
-        register: performance
-
-      - name: Check autorun governor performance
-        cron:
-          name: cpufreq performance
-          reboot: yes
-          job: "cpufreq-set -g performance"
-          state: present
-
-
-      # Readwrite mode
-
-      # select desired audio interface for puredata
-      - include: external-dac.yml
-        tags: setup
-
-      # in
-
-      # out
-
-      # select samplerate {{ samplerate }} audiobuf 48000
-
-      # select buffersize {{ buffersize }} audiobuf 16
-
-      # select blocksize {{ blocksize }} blocksize 64
-
-      # save data
-      - name: Saving settings to /home/pi/.pdsettings
-        template:
-          src: "../templates/pdsettings"
-          dest: "/home/pi/.pdsettings"
-
-      # print pdsettings
-      - name: Printing /home/pi/.pdsettings
-        shell: cat /home/pi/.pdsettings
-        register: pdsettings
-
-      - debug: msg="{{ pdsettings.stdout_lines }}"
-
-      # Rebooting or Restart PD
+- include: usb-audio.yml
+  tags: setup
+  when: usbaudio == 'yes'

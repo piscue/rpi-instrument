@@ -1,14 +1,27 @@
 # Update apt packages
-- name: Update apt packages
+- name: PUREDATA | Update apt packages
   become: yes
   apt:
     update_cache=yes
 
 # Installing pd and vim. Maybe swith to puredata-core
-- name: Installing pd and vim
+- name: PUREDATA | Installing pd, rsync and vim
   become: yes
   package: name={{ item }} state=latest
   with_items:
     - vim
     - puredata-core
-    #- puredata
+    - rsync
+
+# save data
+- name: PUREDATA | Saving settings to /home/pi/.pdsettings
+  template:
+    src: "../templates/pdsettings"
+    dest: "/home/pi/.pdsettings"
+
+# print pdsettings
+#- name: Printing /home/pi/.pdsettings
+#  shell: cat /home/pi/.pdsettings
+#  register: pdsettings
+
+#- debug: msg="{{ pdsettings.stdout_lines }}"

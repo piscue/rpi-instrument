@@ -33,6 +33,7 @@
     private: yes
   - name: ssh_key
     prompt: "please enter the SSH Key for your new device"
+    default: samesshkey
     private: yes
 
   tasks:
@@ -50,10 +51,14 @@
       tags: setup
 
     - name: Create SSH folder
-      file: path=~/.ssh state=directory
+      file:
+        path: "~/.ssh"
+        state: directory
 
     - name: Set up SSH Key from a template
-      template: src=../templates/authorized_keys dest=~/.ssh/authorized_keys
+      template:
+        src: "../templates/authorized_keys"
+        dest: "~/.ssh/authorized_keys"
 
     - name: run 'dpkg --configure -a'
       become: yes
