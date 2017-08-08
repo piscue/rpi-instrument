@@ -29,7 +29,7 @@
 
       - name: Check autorun governor performance
         cron:
-          name: pd
+          name: cpufreq performance
           reboot: yes
           job: "cpufreq-set -g performance"
           state: present
