@@ -13,11 +13,15 @@
     kernel_version: "kernel-rpi-rt-4.9.40-v7+"
     homepi: "/home/pi/"
 
+    # This configures an external i2s dac
+    # based on pcm8251a
+    externaldac: "no"
+
   vars_prompt:
 
   - name: samplerate
     prompt: "Samplerate?"
-    default: 44100
+    default: 48000
     private: no
   - name: buffersize
     prompt: "Buffer Size?"
@@ -29,20 +33,22 @@
     private: no
 
   tasks:
-    - debug:
-        msg: "play audio not so loud!"
-
 
     # Default skipped due to start
     # from ethernet and follow via wifi
     #- include: new-default.yml
     #  tags: setup
 
+    - include: ../tasks/disable-services.yml
+      tags: setup
+
     - include: ../tasks/setup-pd.yml
       tags: setup
 
     - include: ../tasks/audio-setup.yml
       tags: setup
+
+    # implement this handler: - name: wait for reboot to finish
 
   # disabling rt to test pd properly
   #- include: ../tasks/realtime-kernel.yml

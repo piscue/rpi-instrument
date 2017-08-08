@@ -38,6 +38,8 @@
       # Readwrite mode
 
       # select desired audio interface for puredata
+      - include: external-dac.yml
+        tags: setup
 
       # in
 
