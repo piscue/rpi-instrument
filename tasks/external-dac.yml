@@ -1,6 +1,22 @@
 
       # setup external dac, based on a variable
 
+      # create a way to not mees-up with config.txt
+      # try to guess if the variable exists
+      # before enable it (uncommenting)
+
+      # use stat package
+
+      # - stat: path={{ mattermost_directory }}
+      #   register: mattermost_install
+      #
+      # - name: Some other task
+      #   module: arg1=foo arg2=bar
+      #   when: mattermost_install.stat.exists == False
+
+      # search for other modules to parse
+      # configuration files
+
     - name: EXTERNAL DAC | Enable
       block:
 
