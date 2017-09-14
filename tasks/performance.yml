@@ -12,6 +12,17 @@
           value: 524288
           state: present
 
+      - name: set pi gpu mem to 16
+        become: true
+        lineinfile:
+          path: /boot/config.txt
+          regexp: 'gpu_mem.*'
+          line: 'gpu_mem=16'
+          owner: root
+          group: root
+          mode: 0755
+
+
       # Install linux-cpupower
       - name: PERFORMANCE | Installing cpufreq-set by cpufrequtils package
         become: yes
