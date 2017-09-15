@@ -16,7 +16,8 @@
     samplerate: 48000
     buffersize: 16
     blocksize: 64
-    kernel_version: "kernel-rpi-rt-4.9.40-v7+"
+    #kernel_version: "kernel-rpi-rt-4.9.40-v7+"
+    kernel_version: "kernel-4.4.9-rt17"
     homepi: "/home/pi/"
 
     # This configures an external i2s dac
@@ -145,7 +146,7 @@
 
     # disabling rt to test pd properly
     #- include: ../tasks/realtime-kernel.yml
-    #    tags: setup
+    #  tags: setup
 
   handlers:
 

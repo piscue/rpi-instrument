@@ -4,6 +4,13 @@
 #       hostname: "test-pi-nes"
 #
 
+# Required dbus depend
+- name: Install dbus
+  become: yes
+  package:
+    name: dbus
+    state: latest
+
 # Set the hostname
 - name: Set the hostname
   become: yes

@@ -12,14 +12,14 @@
         name: rsync
         state: latest
 
-    # # Download repo https://github.com/piscue/Realtime-Kernel-RaspberryPi.git
-    # - name: Downloading pre-compiled kernel from piscue's repo
-    #   become: yes
-    #   git:
-    #     repo: https://github.com/piscue/Realtime-Kernel-RaspberryPi.git
-    #     dest: /home/pi/Realtime-Kernel-RaspberryPi
-    #
-    #
+    # Download repo https://github.com/piscue/Realtime-Kernel-RaspberryPi.git
+    #- name: Downloading pre-compiled kernel from piscue's repo
+    #  become: yes
+    #  git:
+    #    repo: https://github.com/piscue/Realtime-Kernel-RaspberryPi.git
+    #    dest: /home/pi/Realtime-Kernel-RaspberryPi
+
+
 
     - name: "Creating {{ homepi }}boot-important"
       file:
