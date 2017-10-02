@@ -2,8 +2,6 @@
 
 The idea is to transform a Raspbian lite OS to a fully functional OS for being treated as an Instrument, that boots directly to sound by itself.
 
-The base of this code (the handlers, tasks, and new-default.yml), is obtained from this other [Garth Vander Houwen Github's repo](https://github.com/garthvh/ansible-raspi-playbooks). This allows to pre-setup the Raspberry locales, Wifi Network, Update it and more things.
-
 ## Inital steps
 
 1 - [Download Rasbian Lite image](https://downloads.raspberrypi.org/raspbian_lite_latest) (tested with the following releases of: 2016-06-21, 2017-07-05)
@@ -43,3 +41,5 @@ The base of this code (the handlers, tasks, and new-default.yml), is obtained fr
 ```ansible-playbook -i hosts playbooks/install-patch.yml```
 
 The first Musical software intended to run is based Puredata, for headless running of patches.
+
+Resources based: [Garth Vander Houwen Github's repo](https://github.com/garthvh/ansible-raspi-playbooks)
