@@ -20,6 +20,8 @@
     kernel_version: "kernel-4.4.9-rt17"
     homepi: "/home/pi/"
 
+    # Support for MCP3008
+    mcp3008: "yes"
     # This configures an external i2s dac
     # based on pcm8251a
     externaldac: "no"
