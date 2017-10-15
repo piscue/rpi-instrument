@@ -3,42 +3,25 @@
     - name: Setting mcp3008 | Enable
       block:
 
-        # - name: EXTERNAL DAC | Adding hifiberry-dac overlay
-        #   become: yes
-        #   lineinfile:
-        #     regexp: "^#dtoverlay=hifiberry-dac"
-        #     line: "dtoverlay=hifiberry-dac"
-        #     path: /boot/config.txt
-        #
-        # - name: EXTERNAL DAC | Disable on-board sound
-        #   become: yes
-        #   lineinfile:
-        #     path: /boot/config.txt
-        #     regexp: '^dtparam=audio=on'
-        #     line: '#dtparam=audio=on'
-        #   notify:
-        #   - reboot
+        # Enable SPI
+        - name: ENABLE SPI
+          regexp: "^#?dtparam=spi"
+          line: "dtparam=spi=on"
+        # Copy code or libraries
+        # Set pd externals on the path
+        # just need to ship it with the patch
+
+
 
       when: mcp3008 == 'yes'
 
     - name: Setting mcp3008 | Disable
       block:
 
-        # - name: EXTERNAL DAC | remove hifiberry-dac overlay
-        #   become: yes
-        #   lineinfile:
-        #     regexp: "^dtoverlay=hifiberry-dac"
-        #     line: "#dtoverlay=hifiberry-dac"
-        #     path: /boot/config.txt
-        #
-        #
-        # - name: EXTERNAL DAC | Enable on-board sound
-        #   become: yes
-        #   lineinfile:
-        #     path: /boot/config.txt
-        #     regexp: '^#dtparam=audio=on'
-        #     line: 'dtparam=audio=on'
-        #   notify:
-        #   - reboot
+        # Disable SPI
+        - name: DISABLE SPI
+          regexp: "^#?dtparam=spi"
+          line: "dtparam=spi=off"
 
-      when: externaldac != 'yes'
+
+      when: mcp3008 != 'yes'
