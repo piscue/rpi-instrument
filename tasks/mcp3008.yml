@@ -1,0 +1,27 @@
+      # setup adc mcp3008
+
+    - name: Setting mcp3008 | Enable
+      block:
+
+        # Enable SPI
+        - name: ENABLE SPI
+          regexp: "^#?dtparam=spi"
+          line: "dtparam=spi=on"
+        # Copy code or libraries
+        # Set pd externals on the path
+        # just need to ship it with the patch
+
+
+
+      when: mcp3008 == 'yes'
+
+    - name: Setting mcp3008 | Disable
+      block:
+
+        # Disable SPI
+        - name: DISABLE SPI
+          regexp: "^#?dtparam=spi"
+          line: "dtparam=spi=off"
+
+
+      when: mcp3008 != 'yes'
