@@ -22,9 +22,11 @@
 
     # Support for MCP3008
     mcp3008: "yes"
+    # Support for MPR121
+    mpr121: "yes"
     # This configures an external i2s dac
     # based on pcm8251a
-    externaldac: "no"
+    externaldac: "yes"
     # enable usb audio card as default
     usbaudio: "no" # this have preference on any other dac
     alsausb: "{{ 'options snd-usb-audio index=0' if usbaudio == 'yes' else '#options snd-usb-audio index=0' }}"
@@ -146,6 +148,8 @@
     - include: ../tasks/audio-setup.yml
       tags: setup
 
+    - include: ../tasks/mpr121.yml
+      tags: setup
     # disabling rt to test pd properly
     #- include: ../tasks/realtime-kernel.yml
     #  tags: setup
