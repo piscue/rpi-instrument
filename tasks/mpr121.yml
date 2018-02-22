@@ -55,6 +55,14 @@
           name: i2c-dev
           state: present
 
+      # doesn't work always? Add it manually to /etc/modules - option
+      # - name: MPR121 | Adding kernel module i2c-dev
+      #   become: yes
+      #   lineinfile:
+      #     regexp: "^i2c-dev"
+      #     line: "i2c-dev"
+      #     path: /etc/modules
+
       # copy python script
       - name: MPR121 | Install mpr121-pd.py script
         become: yes

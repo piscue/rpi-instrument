@@ -4,7 +4,7 @@ The idea is to transform a Raspbian lite OS to a fully functional OS for being t
 
 ## Inital steps
 
-1 - [Download Rasbian Lite image](https://downloads.raspberrypi.org/raspbian_lite_latest) (tested with the following releases of: 2016-06-21, 2016-11-25, 2017-07-05 (test MPR121))
+1 - [Download Rasbian "Jessie" Lite image](https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2016-11-29/2016-11-25-raspbian-jessie-lite.zip) or [Download a normal Rasbian "Jessie" image with Desktop](https://downloads.raspberrypi.org/raspbian/images/raspbian-2016-11-29/2016-11-25-raspbian-jessie.zip) (tested with the following release of: 2016-06-21, 2016-11-25)
 
 2 - [Install the Image onto an SD Card](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
 
