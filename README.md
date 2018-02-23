@@ -16,7 +16,7 @@ The idea is to transform a Raspbian lite OS to a fully functional OS for being t
 
 6 - Update the "host" file with the IP address. Using Ansible, it allows to setup any number of network connected rPI at the same time
 
-7 - Make you sure Ansible (Tested on 2.3.1 on OSX) is installed on your computer: [Getting Ansible](http://docs.ansible.com/ansible/latest/intro_installation.html)
+7 - Make you sure Ansible (Tested on 2.3.1, 2.4.3 on OSX) is installed on your computer: [Getting Ansible](http://docs.ansible.com/ansible/latest/intro_installation.html)
 
 8 - Install sshpass, or force install it if you're using [brew](https://brew.sh) on osx:
 
