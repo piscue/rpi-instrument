@@ -1,6 +1,6 @@
       # setup adc mcp3008
 
-    - name: Setting mcp3008 | Enable
+    - name: MCP3008 | Enable
       block:
 
         # Enable SPI
@@ -10,12 +10,18 @@
         # Copy code or libraries
         # Set pd externals on the path
         # just need to ship it with the patch
+        #- name: Remove Blacklist files
+        #  file:
+        #    state: absent
+        #    path: /etc/modproble.d/raspi-blacklist.conf
+
+        # or "sudo dtparam spi"
 
 
 
       when: mcp3008 == 'yes'
 
-    - name: Setting mcp3008 | Disable
+    - name: MCP3008 | Disable
       block:
 
         # Disable SPI

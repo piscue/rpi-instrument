@@ -53,7 +53,7 @@
       cron:
         name: pd
         reboot: yes
-        job: "puredata -nogui {{ patchPH }}/main.pd &"
+        job: "sudo puredata -nogui {{ patchPH }}/main.pd &"
         state: present
       notify:
       - reboot
