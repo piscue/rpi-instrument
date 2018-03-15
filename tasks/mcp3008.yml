@@ -4,9 +4,14 @@
       block:
 
         # Enable SPI
-        - name: ENABLE SPI
-          regexp: "^#?dtparam=spi"
-          line: "dtparam=spi=on"
+        - name: MCP3008 | ENABLE SPI
+          replace:
+            path: /boot/config.txt
+            regexp: "#dtparam=spi=on"
+            replace: "dtparam=spi=on"
+
+          # regexp: "^#?dtparam=spi"
+          #line: "dtparam=spi=on"
         # Copy code or libraries
         # Set pd externals on the path
         # just need to ship it with the patch
@@ -25,9 +30,11 @@
       block:
 
         # Disable SPI
-        - name: DISABLE SPI
-          regexp: "^#?dtparam=spi"
-          line: "dtparam=spi=off"
+        - name: MCP3008 | DISABLE SPI
+          replace:
+            path: /boot/config.txt
+            regexp: "^#?dtparam=spi"
+            line: "dtparam=spi=off"
 
 
       when: mcp3008 != 'yes'

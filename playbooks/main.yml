@@ -24,6 +24,8 @@
     mcp3008: "yes"
     # Support for MPR121
     mpr121: "yes"
+    # Second module Support
+    mpr121_2: "yes"
     # This configures an external i2s dac
     # based on pcm8251a
     externaldac: "yes"
@@ -146,6 +148,9 @@
       tags: setup
 
     - include: ../tasks/audio-setup.yml
+      tags: setup
+
+    - include: ../tasks/mcp3008.yml
       tags: setup
 
     - include: ../tasks/mpr121.yml

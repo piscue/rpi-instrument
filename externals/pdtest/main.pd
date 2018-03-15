@@ -1,4 +1,4 @@
-#N canvas 278 251 1078 660 10;
+#N canvas 56 228 1532 660 10;
 #X obj 253 458 *~;
 #X obj 267 430 line~;
 #X msg 267 374 0.1 100;
@@ -35,13 +35,13 @@
 #X obj 86 293 select 0 1;
 #X obj 151 215 + 1;
 #X obj 75 339 222;
-#X obj 525 84 loadbang;
-#X obj 527 121 delay 100;
-#X msg 530 151 \; pd dsp 1;
+#X obj 833 21 loadbang;
+#X obj 835 58 delay 100;
+#X msg 838 88 \; pd dsp 1;
 #X text 150 160 comment;
 #X obj 253 488 dac~;
 #X obj 311 130 netreceive -u 3000;
-#X obj 368 156 print upd;
+#X obj 366 170 print upd;
 #X obj 221 191 route touch0 touch1 touch2 touch3 touch4 touch5 touch6
 touch7 touch8 touch9 touch10 touch11;
 #X obj 221 260 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
@@ -69,44 +69,69 @@ touch7 touch8 touch9 touch10 touch11;
 1;
 #X obj 564 264 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 711 97 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
--1;
-#X obj 638 89 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
-1;
-#X msg 688 157 setup_wiringPi;
-#X obj 637 238 unpack f f f f f f f f;
-#X obj 621 293 vsl 15 128 670 1023 0 0 empty empty empty 0 -9 0 10
--262144 -1 -1 2375 1;
-#X obj 647 293 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 397 1;
-#X obj 673 293 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 211 1;
-#X obj 699 293 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 199 1;
-#X obj 724 293 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 211 1;
-#X obj 750 293 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 199 1;
-#X obj 776 293 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 223 1;
-#X obj 802 293 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 286 1;
-#X obj 637 210 wiringPi_mcp3008 0 8;
-#X text 799 127 2 once creation args in main object are specified \,
-click on this message to enable the adcs., f 28;
-#X text 738 517 Jaime Oliver La Rosa - 2014 (la.rosa@nyu.edu), f 51
-;
-#X text 835 207 1 args are (spi_port \, No. of ADCs to read). Once
+#X obj 1158 120 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 1085 112 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
+1 1;
+#X msg 1135 180 setup_wiringPi;
+#X obj 1084 261 unpack f f f f f f f f;
+#X obj 1068 316 vsl 15 128 670 1023 0 0 empty empty empty 0 -9 0 10
+-262144 -1 -1 12268 1;
+#X obj 1094 316 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 12551 1;
+#X obj 1120 316 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 12551 1;
+#X obj 1146 316 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 12526 1;
+#X obj 1171 316 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 12551 1;
+#X obj 1197 316 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 12551 1;
+#X obj 1223 316 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 12551 1;
+#X obj 1249 316 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 12551 1;
+#X obj 1084 233 wiringPi_mcp3008 0 8;
+#X text 1246 150 2 once creation args in main object are specified
+\, click on this message to enable the adcs., f 28;
+#X text 1282 230 1 args are (spi_port \, No. of ADCs to read). Once
 you run setup_wiringPi you can't change these numbers or it'll crash
 when you run the setup message again. *, f 27;
-#X text 866 313 0 For this object to work you must have wiringPi installed
+#X text 1313 336 0 For this object to work you must have wiringPi installed
 in your pi \, then run "sudo gpio load spi"., f 26;
-#X text 737 96 3 bang to outout a list of values;
-#X text 617 454 This object uses the wiringPi library. For more information
+#X text 1184 119 3 bang to outout a list of values;
+#X text 1064 477 This object uses the wiringPi library. For more information
 see: http://www.wiringpi.com, f 38;
-#X obj 637 110 metro 5;
-#X text 513 321 range 670-1023;
-#X obj 710 39 loadbang;
+#X obj 1084 133 metro 5;
+#X text 960 344 range 670-1023;
+#X obj 1157 62 loadbang;
+#X obj 637 259 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 668 259 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 699 259 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 730 257 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 762 259 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 793 258 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 824 259 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X text 643 224 1 2 3 4 5 6 7 8 9 10 11 12;
+#X obj 855 260 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 887 259 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 918 261 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 949 262 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 980 263 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 636 190 route touch0_2 touch1_2 touch2_2 touch3_2 touch4_2 touch5_2
+touch6_2 touch7_2 touch8_2 touch9_2 touch10_2 touch11_2;
 #X connect 0 0 36 0;
 #X connect 0 0 36 1;
 #X connect 1 0 0 1;
@@ -134,6 +159,7 @@ see: http://www.wiringpi.com, f 38;
 #X connect 32 0 33 0;
 #X connect 33 0 34 0;
 #X connect 37 0 39 0;
+#X connect 37 0 87 0;
 #X connect 39 0 40 0;
 #X connect 39 1 41 0;
 #X connect 39 2 42 0;
@@ -147,7 +173,7 @@ see: http://www.wiringpi.com, f 38;
 #X connect 39 10 51 0;
 #X connect 39 11 52 0;
 #X connect 53 0 65 0;
-#X connect 54 0 72 0;
+#X connect 54 0 71 0;
 #X connect 55 0 65 0;
 #X connect 56 0 57 0;
 #X connect 56 1 58 0;
@@ -158,6 +184,18 @@ see: http://www.wiringpi.com, f 38;
 #X connect 56 6 63 0;
 #X connect 56 7 64 0;
 #X connect 65 0 56 0;
-#X connect 72 0 65 0;
-#X connect 74 0 54 0;
-#X connect 74 0 55 0;
+#X connect 71 0 65 0;
+#X connect 73 0 54 0;
+#X connect 73 0 55 0;
+#X connect 87 0 74 0;
+#X connect 87 1 75 0;
+#X connect 87 2 76 0;
+#X connect 87 3 77 0;
+#X connect 87 4 78 0;
+#X connect 87 5 79 0;
+#X connect 87 6 80 0;
+#X connect 87 7 82 0;
+#X connect 87 8 83 0;
+#X connect 87 9 84 0;
+#X connect 87 10 85 0;
+#X connect 87 11 86 0;

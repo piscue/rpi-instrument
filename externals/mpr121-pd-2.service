@@ -1,0 +1,16 @@
+[Unit]
+After=ssh.service
+
+[Service]
+ExecStart=/usr/bin/python /root/mpr121-pd-2.py
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=mpr121-pd-2
+User=root
+Group=root
+#Environment=NODE_ENV={{ env }}
+WorkingDirectory=/root
+
+[Install]
+WantedBy=default.target
