@@ -2,9 +2,13 @@
 
 The idea is to transform a Raspbian lite OS to a fully functional OS for being treated as an Instrument, that boots directly to sound by itself.
 
+Currently, It has support for 1 MCP3008, 2 MPR121, an external DAC based on "hifiberry" (PCM5102).
+
+It also does some performance tuning, system setting, puredata configuration, install puredata and related libraries.
+
 ## Inital steps
 
-1 - [Download Rasbian "Jessie" Lite image](https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2016-11-29/2016-11-25-raspbian-jessie-lite.zip) or [Download a normal Rasbian "Jessie" image with Desktop](https://downloads.raspberrypi.org/raspbian/images/raspbian-2016-11-29/2016-11-25-raspbian-jessie.zip) (tested with the following release of: 2016-06-21, 2016-11-25)
+1 - [Download Rasbian "Jessie" Lite image](https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2016-11-29/2016-11-25-raspbian-jessie-lite.zip) or [Download a normal Rasbian "Jessie" image with Desktop](https://downloads.raspberrypi.org/raspbian/images/raspbian-2016-11-29/2016-11-25-raspbian-jessie.zip) (tested with the following release of: 2016-06-21, 2016-11-25) - Newer releases break the way to interact with SPI for the MCP3008.
 
 2 - [Install the Image onto an SD Card](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
 
