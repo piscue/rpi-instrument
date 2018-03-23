@@ -72,7 +72,7 @@ while True:
             send2Pd (message)
     # Update last state and wait a short period before repeating.
     last_touched = current_touched
-    time.sleep(0.1)
+    time.sleep(0.01)
 
     # Alternatively, if you only care about checking one or a few pins you can
     # call the is_touched method with a pin number to directly check that pin.
