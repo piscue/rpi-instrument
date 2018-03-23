@@ -2,7 +2,7 @@
 
 The idea is to transform a Raspbian lite OS to a fully functional OS for being treated as an Instrument, that boots directly to sound by itself.
 
-Currently, It has support for 1 MCP3008, 2 MPR121, an external DAC based on "hifiberry" (PCM5102).
+Currently, It has support for 1 MCP3008, 2 MPR121, 4 Switches via GPIO, and an external DAC based on "hifiberry" (PCM5102).
 
 It also does some performance tuning, system setting, puredata configuration, install puredata and related libraries.
 
