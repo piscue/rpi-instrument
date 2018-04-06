@@ -23,7 +23,10 @@ import sys
 import time
 
 #for pdsend
-import os
+#import os
+
+# read gpio
+import wiringpi
 
 import Adafruit_MPR121.MPR121 as MPR121
 import socket
@@ -38,6 +41,14 @@ print('Adafruit MPR121 Capacitive Touch Sensor Test')
 # Create MPR121 instance.
 cap = MPR121.MPR121()
 cap2 = MPR121.MPR121()
+
+wiringpi.wiringPiSetup()
+switch1_old = 0
+switch2_old = 0
+switch3_old = 0
+switch4_old = 0
+
+
 
 # Initialize communication with MPR121 using default I2C bus of device, and
 # default I2C address (0x5A).  On BeagleBone Black will default to I2C bus 0.
@@ -70,12 +81,40 @@ last_touched2 = cap2.touched()
 while True:
     current_touched = cap.touched()
     current_touched2 = cap2.touched()
+
+    ### 4 Switches
+    switch1 = wiringpi.digitalRead(4)
+    switch2 = wiringpi.digitalRead(5)
+    switch3 = wiringpi.digitalRead(2)
+    switch4 = wiringpi.digitalRead(3)
+    if switch1 != switch1_old:
+        print ("sw 1: " + str(switch1))
+        switch1_old = switch1
+        message = 'sw 1 ' + str(switch1)
+        send2Pd (message)
+    if switch2 != switch2_old:
+        print ("sw 2: " + str(switch2))
+        switch2_old = switch2
+        message = 'sw 2 ' + str(switch2)
+        send2Pd (message)
+    if switch3 != switch3_old:
+        print ("sw 3: " + str(switch3))
+        switch3_old = switch3
+        message = 'sw 3 ' + str(switch3)
+        send2Pd (message)
+    if switch4 != switch4_old:
+        print ("sw 4: " + str(switch4))
+        switch4_old = switch4
+        message = 'sw 4 ' + str(switch4)
+        send2Pd (message)
+
     # Check each pin's last and current state to see if it was pressed or released.
     for i in range(12):
         # Each pin is represented by a bit in the touched value.  A value of 1
         # means the pin is being touched, and 0 means it is not being touched.
+
+        ### Capacitive 1
         pin_bit = 1 << i
-        pin_bit2 = 1 << i
         # First check if transitioned from not touched to touched.
         if current_touched & pin_bit and not last_touched & pin_bit:
             print('x1 {0:x} touched!'.format(i))
@@ -87,19 +126,24 @@ while True:
             message = 'x1 {0:x} 0'.format(i)
             send2Pd (message)
 
+        ### Capicitive 2
+        pin_bit2 = 1 << i
         if current_touched2 & pin_bit2 and not last_touched2 & pin_bit2:
             print('x2 {0:x} touched!'.format(i))
             message = 'x2 {0:x} 1'.format(i)
             send2Pd (message)
-        # Next check if transitioned from touched to not touched.
         if not current_touched2 & pin_bit2 and last_touched2 & pin_bit2:
             print('x2 {0:x} released!'.format(i))
             message = 'x2 {0:x} 0'.format(i)
             send2Pd (message)
 
+
     # Update last state and wait a short period before repeating.
     last_touched = current_touched
     last_touched2 = current_touched2
+    # Update last state and wait a short period before repeating.
+
+
 
     time.sleep(0.01)
 

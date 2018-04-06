@@ -2,7 +2,7 @@
 After=ssh.service
 
 [Service]
-ExecStart=/usr/bin/python /root/mpr121-pd.py
+ExecStart=/usr/bin/python /root/mpr121-pd-udp.py
 Restart=always
 StandardOutput=syslog
 StandardError=syslog
