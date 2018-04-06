@@ -37,6 +37,7 @@ print('Adafruit MPR121 Capacitive Touch Sensor Test')
 
 # Create MPR121 instance.
 cap = MPR121.MPR121()
+cap2 = MPR121.MPR121()
 
 # Initialize communication with MPR121 using default I2C bus of device, and
 # default I2C address (0x5A).  On BeagleBone Black will default to I2C bus 0.
@@ -44,7 +45,11 @@ if not cap.begin():
     print('Error initializing MPR121.  Check your wiring!')
     sys.exit(1)
 
+if not cap.begin():
+    print('Error initializing MPR121.  Check your wiring!')
+    sys.exit(1)
 
+cap2.begin(address=0x5C)
 
 # Alternatively, specify a custom I2C address such as 0x5B (ADDR tied to 3.3V),
 # 0x5C (ADDR tied to SDA), or 0x5D (ADDR tied to SCL).
@@ -61,8 +66,10 @@ def send2Pd(message=''):
 # Main loop to print a message every time a pin is touched.
 print('Press Ctrl-C to quit.')
 last_touched = cap.touched()
+last_touched2 = cap2.touched()
 while True:
     current_touched = cap.touched()
+    current_touched2 = cap2.touched()
     # Check each pin's last and current state to see if it was pressed or released.
     for i in range(12):
         # Each pin is represented by a bit in the touched value.  A value of 1
@@ -80,9 +87,19 @@ while True:
             message = 'x1 {0:x} 0'.format(i)
             send2Pd (message)
 
+        if current_touched2 & pin_bit2 and not last_touched2 & pin_bit2:
+            print('x2 {0:x} touched!'.format(i))
+            message = 'x2 {0:x} 1'.format(i)
+            send2Pd (message)
+        # Next check if transitioned from touched to not touched.
+        if not current_touched2 & pin_bit2 and last_touched2 & pin_bit2:
+            print('x2 {0:x} released!'.format(i))
+            message = 'x2 {0:x} 0'.format(i)
+            send2Pd (message)
 
     # Update last state and wait a short period before repeating.
     last_touched = current_touched
+    last_touched2 = current_touched2
 
     time.sleep(0.01)
 
