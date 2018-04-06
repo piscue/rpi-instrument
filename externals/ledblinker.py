@@ -33,6 +33,7 @@ sock.bind((UDP_IP, UDP_PORT))
 #wiringpi.wiringPiSetupSys()
 
 led_old = 0
+wiringpi.pinMode(0, 1)
 
 
 #def send2Pd(message=''):
@@ -45,28 +46,5 @@ while True:
         print data
         wiringpi.digitalWrite(0,int(data))
         led_old = data
-    # switch1 = wiringpi.digitalRead(4)
-    # switch2 = wiringpi.digitalRead(5)
-    # switch3 = wiringpi.digitalRead(2)
-    # switch4 = wiringpi.digitalRead(3)
-    # if switch1 != switch1_old:
-    #     print ("switch1: " + str(switch1))
-    #     switch1_old = switch1
-    #     message = 'switch1 ' + str(switch1)
-    #     send2Pd (message)
-    # if switch2 != switch2_old:
-    #     print ("switch2: " + str(switch2))
-    #     switch2_old = switch2
-    #     message = 'switch2 ' + str(switch2)
-    #     send2Pd (message)
-    # if switch3 != switch3_old:
-    #     print ("switch3: " + str(switch3))
-    #     switch3_old = switch3
-    #     message = 'switch3 ' + str(switch3)
-    #     send2Pd (message)
-    # if switch4 != switch4_old:
-    #     print ("switch4: " + str(switch4))
-    #     switch4_old = switch4
-    #     message = 'switch4 ' + str(switch4)
-    #     send2Pd (message)
+
     # time.sleep(0.01)
