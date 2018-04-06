@@ -1,7 +1,7 @@
 # Copyright (c) 2014 Adafruit Industries
 # Author: Tony DiCola
 #
-# Modified by: piscue 20180221
+# Modified by: piscue 20180406
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -36,19 +36,16 @@ UDP_PORT = 3000
 sock = socket.socket(socket.AF_INET, # Internet
              socket.SOCK_DGRAM) # UDP
 
-print('Adafruit MPR121 Capacitive Touch Sensor Test')
-
 # Create MPR121 instance.
 cap = MPR121.MPR121()
 cap2 = MPR121.MPR121()
 
+# WiringPI setup
 wiringpi.wiringPiSetup()
 switch1_old = 0
 switch2_old = 0
 switch3_old = 0
 switch4_old = 0
-
-
 
 # Initialize communication with MPR121 using default I2C bus of device, and
 # default I2C address (0x5A).  On BeagleBone Black will default to I2C bus 0.
@@ -56,23 +53,20 @@ if not cap.begin():
     print('Error initializing MPR121.  Check your wiring!')
     sys.exit(1)
 
-if not cap.begin():
+if not cap2.begin():
     print('Error initializing MPR121.  Check your wiring!')
     sys.exit(1)
 
-cap2.begin(address=0x5C)
-
 # Alternatively, specify a custom I2C address such as 0x5B (ADDR tied to 3.3V),
 # 0x5C (ADDR tied to SDA), or 0x5D (ADDR tied to SCL).
-#cap.begin(address=0x5B)
+cap2.begin(address=0x5C)
 
 # Also you can specify an optional I2C bus with the bus keyword parameter.
 #cap.begin(busnum=1)
 
-# def for pdsend
+# def for sending messages
 def send2Pd(message=''):
     sock.sendto(message, (UDP_IP, UDP_PORT))
-    #os.system("echo '" + message + "' | pdsend 3000 localhost udp")
 
 # Main loop to print a message every time a pin is touched.
 print('Press Ctrl-C to quit.')
@@ -88,22 +82,19 @@ while True:
     switch3 = wiringpi.digitalRead(2)
     switch4 = wiringpi.digitalRead(3)
     if switch1 != switch1_old:
-        print ("sw 1: " + str(switch1))
+        #print ("sw 1: " + str(switch1))
         switch1_old = switch1
         message = 'sw 1 ' + str(switch1)
         send2Pd (message)
     if switch2 != switch2_old:
-        print ("sw 2: " + str(switch2))
         switch2_old = switch2
         message = 'sw 2 ' + str(switch2)
         send2Pd (message)
     if switch3 != switch3_old:
-        print ("sw 3: " + str(switch3))
         switch3_old = switch3
         message = 'sw 3 ' + str(switch3)
         send2Pd (message)
     if switch4 != switch4_old:
-        print ("sw 4: " + str(switch4))
         switch4_old = switch4
         message = 'sw 4 ' + str(switch4)
         send2Pd (message)
@@ -117,23 +108,21 @@ while True:
         pin_bit = 1 << i
         # First check if transitioned from not touched to touched.
         if current_touched & pin_bit and not last_touched & pin_bit:
-            print('x1 {0:x} touched!'.format(i))
+            #print('x1 {0:x} touched!'.format(i))
             message = 'x1 {0:x} 1'.format(i)
             send2Pd (message)
         # Next check if transitioned from touched to not touched.
         if not current_touched & pin_bit and last_touched & pin_bit:
-            print('x1 {0:x} released!'.format(i))
+            #print('x1 {0:x} released!'.format(i))
             message = 'x1 {0:x} 0'.format(i)
             send2Pd (message)
 
         ### Capicitive 2
         pin_bit2 = 1 << i
         if current_touched2 & pin_bit2 and not last_touched2 & pin_bit2:
-            print('x2 {0:x} touched!'.format(i))
             message = 'x2 {0:x} 1'.format(i)
             send2Pd (message)
         if not current_touched2 & pin_bit2 and last_touched2 & pin_bit2:
-            print('x2 {0:x} released!'.format(i))
             message = 'x2 {0:x} 0'.format(i)
             send2Pd (message)
 
@@ -141,9 +130,6 @@ while True:
     # Update last state and wait a short period before repeating.
     last_touched = current_touched
     last_touched2 = current_touched2
-    # Update last state and wait a short period before repeating.
-
-
 
     time.sleep(0.01)
 

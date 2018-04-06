@@ -1,0 +1,16 @@
+[Unit]
+After=mpr121-pd.service
+
+[Service]
+ExecStart=sudo puredata -nogui /home/pi/patch/main.pd &
+Restart=on-failure
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=pd-patch
+User=pi
+Group=pi
+#Environment=NODE_ENV={{ env }}
+WorkingDirectory=/home/pi
+
+[Install]
+WantedBy=default.target

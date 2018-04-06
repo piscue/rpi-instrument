@@ -24,10 +24,6 @@
     mcp3008: "yes"
     # Support for MPR121
     mpr121: "yes"
-    # Second module Support
-    mpr121_2: "yes"
-    # 4 Switch support
-    switches: "yes"
     # This configures an external i2s dac
     # based on pcm8251a
     externaldac: "yes"
@@ -158,8 +154,6 @@
     - include: ../tasks/mpr121.yml
       tags: setup
 
-    - include: ../tasks/switches.yml
-      tags: setup
     # disabling rt to test pd properly
     #- include: ../tasks/realtime-kernel.yml
     #  tags: setup

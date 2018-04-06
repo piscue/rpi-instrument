@@ -87,37 +87,6 @@
         notify:
         - reboot
 
-      - name: MPR121_2 | Enable
-        block:
-        - name: MPR121_2 | Second module
-          block:
-          - name: MPR121_2 | Install mpr121-pd-2.py script
-            become: yes
-            copy:
-              src: "../externals/mpr121-pd-2.py"
-              dest: "/root/"
-              mode: 0700
-
-          # execute at boot
-          - name: MPR121_2 | Copy unit for execute mpr121-pd-2.py at boot
-            become: yes
-            copy:
-              src: "../externals/mpr121-pd-2.service"
-              dest: "/etc/systemd/system"
-              mode: 0744
-
-          - name: MPR121_2 | enable service mpr121-pd-2 and ensure it is not masked
-            systemd:
-              name: mpr121-pd-2
-              enabled: yes
-              masked: no
-            notify:
-            - reboot  
-
-          when: mpr121_2 == 'yes'
-
-
-
     when: mpr121 == 'yes'
 
 # try to not remove anything when mpr121 != 'yes'

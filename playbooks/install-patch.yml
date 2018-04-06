@@ -49,12 +49,30 @@
         #use_ssh_args: yes
 
     # setting autorun on startup TODO consider add -rt
-    - name: PD PATCH || Check autorun of Puredata
-      cron:
-        name: pd
-        reboot: yes
-        job: "sudo puredata -nogui {{ patchPH }}/main.pd &"
-        state: present
+
+    # maybe moving to a service
+    # - name: PD PATCH || Check autorun of Puredata
+    #   cron:
+    #     name: pd
+    #     reboot: yes
+    #     job: "sudo puredata -nogui {{ patchPH }}/main.pd &"
+    #     state: present
+    #   notify:
+    #   - reboot
+
+    # execute at boot
+    - name: PD PATCH | Copy unit for execute pd-patch.py at boot
+      become: yes
+      copy:
+        src: "../externals/pd-patch.service"
+        dest: "/etc/systemd/system"
+        mode: 0744
+
+    - name: PD PATCH | enable service pd-patch and ensure it is not masked
+      systemd:
+        name: pd-patch
+        enabled: yes
+        masked: no
       notify:
       - reboot
 
