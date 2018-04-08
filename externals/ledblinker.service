@@ -1,0 +1,16 @@
+[Unit]
+After=ssh.service
+
+[Service]
+ExecStart=/usr/bin/python /root/ledblinker.py
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=ledblinker
+User=root
+Group=root
+#Environment=NODE_ENV={{ env }}
+WorkingDirectory=/root
+
+[Install]
+WantedBy=default.target

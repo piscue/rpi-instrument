@@ -2,7 +2,7 @@
 After=mpr121-pd.service
 
 [Service]
-ExecStart=sudo puredata -nogui /home/pi/patch/main.pd &
+ExecStart=/usr/bin/sudo /usr/bin/puredata -nogui /home/pi/patch/main.pd &
 Restart=on-failure
 StandardOutput=syslog
 StandardError=syslog

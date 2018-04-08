@@ -1,0 +1,31 @@
+      # setup adc mcp3008
+
+  - name: Led Blinker | Enable
+    block:
+    
+      - name: Led Blinker | Install ledblinker.py script
+        become: yes
+        copy:
+          src: "../externals/ledblinker.py"
+          dest: "/root/"
+          mode: 0700
+
+      # execute at boot
+      - name: Led Blinker | Copy unit for execute ledblinker.py at boot
+        become: yes
+        copy:
+          src: "../externals/ledblinker.service"
+          dest: "/etc/systemd/system"
+          mode: 0744
+
+      - name: Led Blinker | enable service ledblinker and ensure it is not masked
+        systemd:
+          name: ledblinker
+          enabled: yes
+          masked: no
+        notify:
+        - reboot
+
+    when: ledblinker == 'yes'
+
+# try to not remove anything when mpr121 != 'yes'

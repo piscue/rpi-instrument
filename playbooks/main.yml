@@ -24,6 +24,8 @@
     mcp3008: "yes"
     # Support for MPR121
     mpr121: "yes"
+    # Support for Led
+    ledblinker: "yes"
     # This configures an external i2s dac
     # based on pcm8251a
     externaldac: "yes"
@@ -154,6 +156,8 @@
     - include: ../tasks/mpr121.yml
       tags: setup
 
+    - include: ../tasks/ledblinker.yml
+      tags: setup
     # disabling rt to test pd properly
     #- include: ../tasks/realtime-kernel.yml
     #  tags: setup
