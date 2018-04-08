@@ -29,8 +29,9 @@ sock = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
 sock.bind((UDP_IP, UDP_PORT))
 #wiringpi.wiringPiSetupGpio()
-#wiringpi.wiringPiSetup()
+wiringpi.wiringPiSetup()
 #wiringpi.wiringPiSetupSys()
+#wiringpi.wiringPiSetupGpio()
 
 led_old = 0
 wiringpi.pinMode(0, 1)
