@@ -13,6 +13,20 @@
     - puredata-core
     - rsync
 
+# check `which startx` to understand if there is X system to install
+- name: PUREDATA | Checking X windows installed
+  stat:
+    path: /usr/bin/startx
+  register: stat_startx
+
+- name: PUREDATA | install pd-gui x11vnc if X windows are available
+  become: yes
+  package: name={{ item }} state=latest
+  with_items:
+    - puredata-gui
+    - x11vnc
+  when: stat_startx.stat.exists == True
+
 # save data
 - name: PUREDATA | Saving settings to /home/pi/.pdsettings
   template:
