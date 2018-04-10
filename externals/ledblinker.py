@@ -1,4 +1,4 @@
-# Author: piscue 20180323
+# Author: piscue 20180323 - 20180406
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -16,7 +16,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-#import wiringpi
+
 import time
 import os
 import socket
@@ -29,15 +29,12 @@ sock = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
 sock.bind((UDP_IP, UDP_PORT))
 #wiringpi.wiringPiSetupGpio()
-#wiringpi.wiringPiSetup()
+wiringpi.wiringPiSetup()
 #wiringpi.wiringPiSetupSys()
+#wiringpi.wiringPiSetupGpio()
 
 led_old = 0
 wiringpi.pinMode(0, 1)
-
-
-#def send2Pd(message=''):
-#    os.system("echo '" + message + "' | pdsend 3000 localhost udp")
 
 while True:
     data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
