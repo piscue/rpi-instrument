@@ -41,28 +41,3 @@
           - reboot
 
       when: externaldac == 'yes'
-
-    - name: EXTERNAL DAC | Disable
-      block:
-
-        # hifiberry-dac overlay
-        # dtoverlay=hifiberry-dac
-        - name: EXTERNAL DAC | remove hifiberry-dac overlay
-          become: yes
-          lineinfile:
-            regexp: "^dtoverlay=hifiberry-dac"
-            line: "#dtoverlay=hifiberry-dac"
-            path: /boot/config.txt
-
-        # disable on-board sound
-
-        - name: EXTERNAL DAC | Enable on-board sound
-          become: yes
-          lineinfile:
-            path: /boot/config.txt
-            regexp: '^#dtparam=audio=on'
-            line: 'dtparam=audio=on'
-          notify:
-          - reboot
-
-      when: externaldac != 'yes'
