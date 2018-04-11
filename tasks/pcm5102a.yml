@@ -1,18 +1,18 @@
-    - name: PI-DAC+ | Enable
+    - name: PCM8251A | Enable
       block:
 
         # hifiberry-dac overlay
         # dtoverlay=hifiberry-dac
-        - name: PI-DAC+ | Adding iqaudio-dacplus overlay
+        - name: PCM8251A | Adding hifiberry-dac overlay
           become: yes
           lineinfile:
-            regexp: "^#dtoverlay=iqaudio-dacplus"
-            line: "dtoverlay=iqaudio-dacplus"
+            regexp: "^#dtoverlay=hifiberry-dac"
+            line: "dtoverlay=hifiberry-dac"
             path: /boot/config.txt
 
         # disable on-board sound
-
-        # - name: PI-DAC+ | Disable on-board sound
+        # 
+        # - name: PCM8251A | Disable on-board sound
         #   become: yes
         #   lineinfile:
         #     path: /boot/config.txt
@@ -21,4 +21,4 @@
         #   notify:
         #   - reboot
 
-      when: pidacplus == 'yes'
+      when: pcm8251a == 'yes'

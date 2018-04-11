@@ -14,9 +14,9 @@
       notify:
       - reboot
 
-    - name: USB AUDIO | Disable on-board sound
-      become: yes
-      lineinfile:
-        path: /boot/config.txt
-        regexp: '^dtparam=audio=on'
-        line: '#dtparam=audio=on'
+    # - name: USB AUDIO | Disable on-board sound
+    #   become: yes
+    #   lineinfile:
+    #     path: /boot/config.txt
+    #     regexp: '^dtparam=audio=on'
+    #     line: '#dtparam=audio=on'
