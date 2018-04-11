@@ -1,7 +1,31 @@
-- include: external-dac.yml
+- include: pcm5102a.yml
   tags: setup
-  when: usbaudio != 'yes'
+  when: pcm5102a == 'yes'
 
 - include: usb-audio.yml
   tags: setup
   when: usbaudio == 'yes'
+
+- include: pidacplus.yml
+  tags: setup
+  when: pidacplus == 'yes'
+
+- name: AUDIO SETUP | Disable on-board sound
+  become: yes
+  lineinfile:
+    path: /boot/config.txt
+    regexp: '^dtparam=audio=on'
+    line: '#dtparam=audio=on'
+  notify:
+  - reboot
+  when: pcm5102a == 'yes' or usbaudio == 'yes' or pidacplus == 'yes'
+
+- name: AUDIO SETUP | Enable on-board sound
+  become: yes
+  lineinfile:
+    path: /boot/config.txt
+    regexp: '^#dtparam=audio=on'
+    line: 'dtparam=audio=on'
+  notify:
+  - reboot
+  when: pcm5102a != 'yes' and usbaudio != 'yes' and pidacplus != 'yes'

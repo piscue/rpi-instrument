@@ -1,0 +1,24 @@
+    - name: PI-DAC+ | Enable
+      block:
+
+        # hifiberry-dac overlay
+        # dtoverlay=hifiberry-dac
+        - name: PI-DAC+ | Adding iqaudio-dacplus overlay
+          become: yes
+          lineinfile:
+            regexp: "^#dtoverlay=iqaudio-dacplus"
+            line: "dtoverlay=iqaudio-dacplus"
+            path: /boot/config.txt
+
+        # disable on-board sound
+
+        # - name: PI-DAC+ | Disable on-board sound
+        #   become: yes
+        #   lineinfile:
+        #     path: /boot/config.txt
+        #     regexp: '^dtparam=audio=on'
+        #     line: '#dtparam=audio=on'
+        #   notify:
+        #   - reboot
+
+      when: pidacplus == 'yes'
