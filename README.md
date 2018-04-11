@@ -2,7 +2,7 @@
 
 The idea is to transform a Raspbian lite OS to a fully functional OS for being treated as an Instrument, that boots directly to sound by itself.
 
-Currently, It has support for 1 MCP3008, 2 MPR121, 4 Switches via GPIO, and an external DAC based on "hifiberry" (PCM5102).
+Currently, It has support for 1 MCP3008, 2 MPR121, 4 Switches (GPIO), 1 Led (GPIO), 1 Midi IN USB Core Midi interface and some external DACs based on "hifiberry" (PCM5102), IQaudIO Pi-DAC+, and Core Audio USB interfaces.
 
 It also does some performance tuning, system setting, puredata configuration, install puredata and related libraries.
 
@@ -16,7 +16,7 @@ It also does some performance tuning, system setting, puredata configuration, in
 
 4 - Put the SD card, Plug your rPI to an Ethernet wire connected to your router, and Power the Raspberry on.
 
-5 - Find your PI's IP Address: Look at your router dhcp leases or use nmap. More [details](https://www.raspberrypi.org/documentation/remote-access/ip-address.md)
+5 - Find your PI's IP Address: ( ping raspberrypi.local ) Look at your router dhcp leases or use nmap. More [details](https://www.raspberrypi.org/documentation/remote-access/ip-address.md)
 
 6 - Update the "host" file with the IP address. Using Ansible, it allows to setup any number of network connected rPI at the same time
 

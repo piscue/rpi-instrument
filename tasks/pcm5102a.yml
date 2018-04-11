@@ -1,9 +1,9 @@
-    - name: PCM8251A | Enable
+    - name: PCM5102A | Enable
       block:
 
         # hifiberry-dac overlay
         # dtoverlay=hifiberry-dac
-        - name: PCM8251A | Adding hifiberry-dac overlay
+        - name: PCM5102A | Adding hifiberry-dac overlay
           become: yes
           lineinfile:
             regexp: "^#dtoverlay=hifiberry-dac"
@@ -11,7 +11,7 @@
             path: /boot/config.txt
 
         # disable on-board sound
-        # 
+        #
         # - name: PCM8251A | Disable on-board sound
         #   become: yes
         #   lineinfile:
@@ -21,4 +21,4 @@
         #   notify:
         #   - reboot
 
-      when: pcm8251a == 'yes'
+      when: pcm5102a == 'yes'
