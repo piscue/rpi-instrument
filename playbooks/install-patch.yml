@@ -69,6 +69,7 @@
         mode: 0744
 
     - name: PD PATCH | enable service pd-patch and ensure it is not masked
+      become: yes
       systemd:
         name: pd-patch
         enabled: yes
