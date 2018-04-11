@@ -26,9 +26,13 @@
     mpr121: "yes"
     # Support for Led
     ledblinker: "yes"
+
     # This configures an external i2s dac
-    # based on pcm8251a
-    externaldac: "yes"
+    # based on pcm8251a (hifiberry)
+    pcm5102a: "yes"
+    # Support for IQaudIO Pi-DAC+
+    pidacplus: "no"
+
     # enable usb audio card as default
     usbaudio: "no" # this have preference on any other dac
     alsausb: "{{ 'options snd-usb-audio index=0' if usbaudio == 'yes' else '#options snd-usb-audio index=0' }}"
