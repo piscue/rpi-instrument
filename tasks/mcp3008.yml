@@ -26,15 +26,15 @@
 
       when: mcp3008 == 'yes'
 
-    - name: MCP3008 | Disable
-      block:
-
-        # Disable SPI
-        - name: MCP3008 | DISABLE SPI
-          replace:
-            path: /boot/config.txt
-            regexp: "^#?dtparam=spi"
-            line: "dtparam=spi=off"
-
-
-      when: mcp3008 != 'yes'
+    # - name: MCP3008 | Disable
+    #   block:
+    #
+    #     # Disable SPI
+    #     - name: MCP3008 | DISABLE SPI
+    #       replace:
+    #         path: /boot/config.txt
+    #         regexp: "^#?dtparam=spi"
+    #         line: "dtparam=spi=off"
+    #
+    #
+    #   when: mcp3008 != 'yes'

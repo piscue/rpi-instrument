@@ -47,6 +47,8 @@
         src: "{{ patchsrc }}/"
         dest: "{{ patchPH }}"
         #use_ssh_args: yes
+      notify:
+      - reboot
 
     # setting autorun on startup TODO consider add -rt
 
