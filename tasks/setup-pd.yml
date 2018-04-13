@@ -33,6 +33,11 @@
     src: "../templates/pdsettings"
     dest: "/home/pi/.pdsettings"
 
+- name: PUREDATA | Saving settings to /root/.pdsettings
+  template:
+    src: "../templates/pdsettings"
+    dest: "/root/.pdsettings"
+
 # print pdsettings
 #- name: Printing /home/pi/.pdsettings
 #  shell: cat /home/pi/.pdsettings
