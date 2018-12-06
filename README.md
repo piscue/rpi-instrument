@@ -26,11 +26,7 @@ It also does some performance tuning, system setting, puredata configuration, in
 
 ```brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb```
 
-9 - Install raspi_ro_root role from Ansible Galaxy
-
-```ansible-galaxy install DinoTools.raspi_ro_root```
-
-10 - Have your Wifi credentials and SSH key ready to paste and run this playbooks:
+9 - Have your Wifi credentials and SSH key ready to paste and run this playbooks:
 
   Setup Hostname, Wifi and SSH Key for keyless SSH connection
   Puredata Install, Realtime Kernel (Disabled Temporary), Optimizations...
