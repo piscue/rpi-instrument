@@ -1,5 +1,5 @@
 [defaultdevices]
-PUT_YOUR_RASPBERRYPI_IP
+raspberrypi.local
 [defaultdevices:vars]
 ansible_user=pi
 ansible_ssh_pass=raspberry
