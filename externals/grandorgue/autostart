@@ -1,0 +1,6 @@
+The programs included with the Debian GNU/Linux system are free software;
+@lxpanel --profile LXDE-pi
+@pcmanfm --desktop --profile LXDE-pi
+/usr/bin/GrandOrgue
+@xscreensaver -no-splash
+@point-rpi

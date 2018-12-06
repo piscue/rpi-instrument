@@ -27,6 +27,9 @@
     # Support for Led
     ledblinker: "yes"
 
+    # GrandOrgue Install
+    grandorgue: "no"
+
     # This configures an external i2s dac
     # based on pcm8251a (hifiberry)
     pcm5102a: "yes"
@@ -161,6 +164,9 @@
       tags: setup
 
     - include: ../tasks/ledblinker.yml
+      tags: setup
+
+    - include: ../tasks/grandorgue.yml
       tags: setup
     # disabling rt to test pd properly
     #- include: ../tasks/realtime-kernel.yml

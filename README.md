@@ -4,7 +4,7 @@ The idea is to transform a Raspbian lite OS to a fully functional OS for being t
 
 Currently, It has support for 1 MCP3008, 2 MPR121, 4 Switches (GPIO), 1 Led (GPIO), 1 Midi IN USB Core Midi interface and some external DACs based on "hifiberry" (PCM5102), IQaudIO Pi-DAC+, and Core Audio USB interfaces.
 
-It also does some performance tuning, system setting, puredata configuration, install puredata and related libraries.
+It also does some performance tuning, system setting, puredata configuration, install puredata and related libraries. It also has support to GrandOrgue install and Autostart via variable (Don't use raspbian lite, use the normal one that provides Desktop environment).
 
 ## Inital steps
 

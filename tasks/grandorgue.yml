@@ -1,0 +1,63 @@
+- name: GRANDORGUE | Enable
+  block:
+
+    - name: GRANDORGUE | Install deps for compilation (or running)
+      become: yes
+      package: name={{ item }} state=latest
+      with_items:
+        - libwxbase3.0-0
+        - cdbs
+        - libwxgtk3.0-0
+        # - cmake
+        # - gettext
+        # - po4a
+        # - libjack-jackd2-dev
+        # - libasound2-dev
+        # - libwxgtk3.0-dev
+        # - docbook-xsl
+        # - xsltproc
+        # - zip
+        # - devscripts
+        # - libudev-dev
+        # - libfftw3-dev
+        # - libwavpack-dev
+
+    - name: GRANDORGUE | Copy deb files
+      #become: yes
+      copy:
+        src: "../externals/grandorgue"
+        dest: "/home/pi"
+        mode: 0700
+
+    - name: GRANDORGUE | Install deb files
+      become: yes
+      shell: dpkg -i grandorgue*deb
+      args:
+        chdir: /home/pi/grandorgue
+
+    - name: GRANDORGUE | Autostart LXDE
+      #become: yes
+      copy:
+        src: "../externals/grandorgue/autostart"
+        dest: "/home/pi/.config/lxsession/LXDE-pi"
+        mode: 0700
+
+
+    # # execute at boot
+    # https://www.wikihow.com/Execute-a-Script-at-Startup-on-the-Raspberry-Pi
+    # - name: GRANDORGUE | Copy unit for execute GrandOrgue at boot
+    #   become: yes
+    #   copy:
+    #     src: "../externals/grandorgue.service"
+    #     dest: "/etc/systemd/system"
+    #     mode: 0744
+    #
+    # - name: GRANDORGUE | enable service GrandOrgue and ensure it is not masked
+    #   systemd:
+    #     name: granorgue
+    #     enabled: yes
+    #     masked: no
+    #   notify:
+    #   - reboot
+
+  when: grandorgue == 'yes'
