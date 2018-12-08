@@ -1,8 +1,8 @@
     - name: PI-DAC+ | Enable
       block:
 
-        # hifiberry-dac overlay
-        # dtoverlay=hifiberry-dac
+        # reference troubleshooting:
+        # http://www.iqaudio.com/downloads/IQaudIO.pdf
         - name: PI-DAC+ | Adding iqaudio-dacplus overlay
           become: yes
           lineinfile:
